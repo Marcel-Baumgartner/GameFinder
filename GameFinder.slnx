@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="GameFinder/GameFinder.vcxproj" Id="aa14bf3b-a56b-470b-99e1-4bc0318ed924" />
+</Solution>
