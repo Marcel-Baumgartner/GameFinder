@@ -44,7 +44,13 @@ void createGameItems(const vector<Game>& games, GameFinderUI& ui, GameItemUI& ga
 		gameItems.releaseDateText.push_back(sf::Text());
 		gameItems.releaseDateText.back().setFont(ui.font);
 		gameItems.releaseDateText.back().setCharacterSize(12);
-		gameItems.releaseDateText.back().setString(game.releaseDate);
+		
+		if (!game.releaseDate.empty()) {
+			gameItems.releaseDateText.back().setString(game.releaseDate);
+		}
+		else {
+			gameItems.releaseDateText.back().setString("Release Date: N/A");
+		}
 
 		if (game.metacritic != -1) {
 			gameItems.metacriticText.push_back(sf::Text());
@@ -63,12 +69,18 @@ void createGameItems(const vector<Game>& games, GameFinderUI& ui, GameItemUI& ga
 		if (game.platforms.empty()) {
 			platforms += "N/A";
 		}
+		int j = 0;
 		for (const auto& p : game.platforms) {
-			platforms += p + ", ";
+			if (j < 4)
+				platforms += p + ", ";
+			j++;
 		}
 		if (!game.platforms.empty()) {
 			platforms.pop_back(); // Remove last space
 			platforms.pop_back(); // Remove last comma
+			if (game.platforms.size() > 4) {
+				platforms += " + " + to_string(game.platforms.size() - 4) + " more";
+			}
 		}
 		gameItems.platformsText.push_back(sf::Text());
 		gameItems.platformsText.back().setFont(ui.font);
@@ -79,12 +91,19 @@ void createGameItems(const vector<Game>& games, GameFinderUI& ui, GameItemUI& ga
 		if (game.genres.empty()) {
 			genres += "N/A";
 		}
+		int k = 0;
 		for (const auto& g : game.genres) {
-			genres += g + ", ";
+			if (k < 4) {
+				genres += g + ", ";
+			}
+			k++;
 		}
 		if (!game.genres.empty()) {
 			genres.pop_back(); // Remove last space
 			genres.pop_back(); // Remove last comma
+			if (game.genres.size() > 4) {
+				genres += " + " + to_string(game.genres.size() - 4) + " more";
+			}
 		}
 		gameItems.genresText.push_back(sf::Text());
 		gameItems.genresText.back().setFont(ui.font);

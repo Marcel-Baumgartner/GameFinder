@@ -42,12 +42,23 @@ Game parseGame(const json& item) {
     Game game;
 
     // Strings
-    game.title = item.value("name", "");
-    game.releaseDate = item.value("released", "");
+    if (item.contains("name") && item["name"].is_string()) {
+        game.title = item["name"].get<string>();
+    }
+    else {
+        game.title = "";
+    }
+
+    if (item.contains("released") && item["released"].is_string()) {
+        game.releaseDate = item["released"].get<string>();
+    }
+    else {
+        game.releaseDate = "";
+    }
 
     // Metacritic
     if (item.contains("metacritic") && item["metacritic"].is_number()) {
-        game.metacritic = item["metacritic"].get<int>();
+        game.metacritic = static_cast<int>(item["metacritic"].get<double>());
     }
     else {
         game.metacritic = -1;
